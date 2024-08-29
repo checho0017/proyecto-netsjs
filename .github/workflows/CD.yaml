@@ -38,27 +38,3 @@ jobs:
         run: docker build . --file Dockerfile --tag sergio0017/api-bff-nestjs:1.1.2
       - name: Publish dockerimage to docker hub
         run: docker push sergio0017/api-bff-nestjs:1.1.2
-        
-    #  - name: Update Version in Helm
-     #   run: |
-          git clone https://github.com/jeanvaes/k8s.app.com.git
-          cd k8s.app.com/Charts/chart1
-          sed -i "s/tag: $((${{ secrets.VERSION }}-1))/tag: ${{ secrets.VERSION }}/" values.yaml
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          
-     # - name: Commit and Push Changes 
-      #  uses: actions-js/push@master
-       # with:
-          directory: k8s.app.com
-          github_token: ${{ secrets.TOKEN }}
-          repository: jeanvaes/k8s.app.com
-          message: Version updated ${date}
-          
-     # - name: Update Version Number
-      #  uses: hmanzur/actions-set-secret@v2.0.0
-       # with:
-          name: 'VERSION'
-          value: $((${{ secrets.VERSION }}+1))
-          repository: juangomezru/patrones-Estudiante
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
