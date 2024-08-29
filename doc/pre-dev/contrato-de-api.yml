@@ -1,0 +1,1386 @@
+swagger: 2.0
+openapi: 3.0.3
+info:
+  title: API ING-NES-BFF-CLEAN
+  description: Esta api expone operaciones para los recursos Notes, NoteLists, Canvas, BugReports y Users.
+  contact:
+    name: Ingeniería de Software - IDS
+    email: IDS@sistecredito.com
+  license:
+    name: Este software es propiedad de SisteCrédito
+    url: https://sistecredito.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/v1.0
+    description: Ambiente local
+  - url: https://URL_AMBIENTE_DE_PRUEBAS
+    description: Ambiente de pruebas
+  - url: https://URL_AMBIENTE_DE_PRODUCCIÓN
+    description: Ambiente de producción
+tags:
+  - name: Recurso Users
+    description: Este recurso implementa operaciones CRUD sobre la entidad Users.
+  - name: Recurso Notes
+    description: Este recurso implementa operaciones CRUD sobre la entidad Notes.
+  - name: Recurso NoteList
+    description: Este recurso implementa operaciones CRUD sobre la entidad List.
+  - name: Recurso CanvasSettings
+    description: Este recurso implementa operaciones de configuracion.
+  - name: Recurso BugsReports
+    description: Este recurso implementa operaciones CRUD sobre la entidad Bugs.
+paths:
+  /users/current-user:
+    get:
+      tags:
+        - Recurso Users
+      summary: Obtener datos del usuario actual
+      operationId: GetUserData
+      description: Esta operación obtiene la informacion del usuario actual. 
+      responses:
+        '200':
+          $ref: '#/x-components/responseBodies/RESPONSE_200_GetCurrentUser'
+        '400':
+          $ref: '#/x-components/responseBodies/RESPONSE_400_AnyOperation'
+        '500':
+          $ref: '#/x-components/responseBodies/RESPONSE_500_AnyOperation'
+  /notes:
+    post:
+      tags:
+        - Recurso Notes
+      summary: Gestion sobre la entidad Notes
+      operationId: CreateNote
+      description: Esta operación realiza la creacion de una nota en la entidad Notes.
+      requestBody:
+        $ref: '#/components/requestBodies/REQUEST_PostNote'
+      responses:
+        '200':
+          $ref: '#/x-components/responseBodies/RESPONSE_200_PostNotes'
+        '400':
+          $ref: '#/x-components/responseBodies/RESPONSE_400_AnyOperation'
+        '404':
+          $ref: '#/x-components/responseBodies/RESPONSE_404_AnyOperation'
+        '500':
+          $ref: '#/x-components/responseBodies/RESPONSE_500_AnyOperation'
+    get:
+      tags:
+        - Recurso Notes
+      summary: Obtener Todas las Notas
+      operationId: GetAllNotes
+      description: Esta operación permite obtener la informacion de las notas.
+      responses:
+        '200':
+          $ref: '#/x-components/responseBodies/RESPONSE_200_GetNotes'
+        '400':
+          $ref: '#/x-components/responseBodies/RESPONSE_400_AnyOperation'
+        '404':
+          $ref: '#/x-components/responseBodies/RESPONSE_404_AnyOperation'
+        '500':
+          $ref: '#/x-components/responseBodies/RESPONSE_500_AnyOperation'
+  /notes/{id}:
+    get:
+      tags:
+        - Recurso Notes
+      summary: Obtener una nota por id
+      operationId: GetOneNote
+      description: Esta operación permite obtener la información de una nota en específico por id.
+      parameters:
+        - $ref: '#/components/parameters/PARAM_PATH_Uuid'
+      responses:
+        '200':
+          $ref: '#/x-components/responseBodies/RESPONSE_200_GetNoteId'
+        '400':
+          $ref: '#/x-components/responseBodies/RESPONSE_400_AnyOperation'
+        '404':
+          $ref: '#/x-components/responseBodies/RESPONSE_404_AnyOperation'
+        '500':
+          $ref: '#/x-components/responseBodies/RESPONSE_500_AnyOperation'
+    delete:
+      tags:
+        - Recurso Notes
+      summary: Eliminar una nota
+      operationId: DeleteNote
+      description: Esta operación permite eliminar una nota mediante su id.
+      parameters:
+        - $ref: '#/components/parameters/PARAM_PATH_Uuid'
+      responses:
+        '200':
+          $ref: '#/x-components/responseBodies/RESPONSE_200_SuccessfullyCompleted'
+        '400':
+          $ref: '#/x-components/responseBodies/RESPONSE_400_AnyOperation'
+        '404':
+          $ref: '#/x-components/responseBodies/RESPONSE_404_AnyOperation'
+        '500':
+          $ref: '#/x-components/responseBodies/RESPONSE_500_AnyOperation'
+    patch:
+          tags:
+            - Recurso Notes
+          summary: Actualizar Nota
+          operationId: UpdateNote
+          description: Esta operación premite actualizar una nota mediante su id.
+          parameters:
+            - $ref: '#/components/parameters/PARAM_PATH_Uuid'
+          requestBody:
+            $ref: '#/components/requestBodies/REQUEST_PatchUpdatingNote'
+          responses:
+            '200':
+              $ref: '#/x-components/responseBodies/RESPONSE_200_GetNotes'
+            '400':
+              $ref: '#/x-components/responseBodies/RESPONSE_400_AnyOperation'
+            '404':
+              $ref: '#/x-components/responseBodies/RESPONSE_404_AnyOperation'
+            '500':
+              $ref: '#/x-components/responseBodies/RESPONSE_500_AnyOperation'          
+  /checked-notes:
+    delete:
+      tags:
+        - Recurso Notes
+      summary: Eliminar Notas Comprobadas
+      operationId: DeleteCheckedNotes
+      description: Esta operación elimina todas las notas en estado cero.
+      responses:
+        '200':
+          $ref: '#/x-components/responseBodies/RESPONSE_200_SuccessfullyCompleted'
+        '400':
+          $ref: '#/x-components/responseBodies/RESPONSE_400_AnyOperation'
+        '500':
+          $ref: '#/x-components/responseBodies/RESPONSE_500_AnyOperation'
+  /notes/{id}/states:
+    post:
+      tags:
+        - Recurso Notes
+      summary: Cambiar el estado de las notas
+      operationId: ChangeStateNote
+      description: Esta operación permite cambiar el estado de una nota mediante su id.
+      responses:
+        '200':
+          $ref: '#/x-components/responseBodies/RESPONSE_200_GetScripts'
+        '500':
+          $ref: '#/x-components/responseBodies/RESPONSE_500_AnyOperation'
+  /isolate-notes:      
+    get:
+      tags:
+        - Recurso Notes
+      summary: Obtener notas aisladas
+      operationId: PatchScript
+      description: Esta operación permite obtener las notas que no se encuentran asociadas a ninguna lista.
+      parameters:
+        - $ref: '#/components/parameters/PARAM_PATH_Id'
+      requestBody: 
+        $ref: '#/components/requestBodies/REQUEST_PatchScript'
+      responses:
+        '200':
+          $ref: '#/x-components/responseBodies/RESPONSE_200_PatchScript'
+        '400':
+          $ref: '#/x-components/responseBodies/RESPONSE_400_AnyOperation'
+        '404':
+          $ref: '#/x-components/responseBodies/RESPONSE_404_AnyOperation'
+        '500':
+          $ref: '#/x-components/responseBodies/RESPONSE_500_AnyOperation'
+components:
+  parameters:
+    PARAM_PATH_Id:
+      name: id
+      in: path
+      description: Identificador del recurso al que se quiere acceder.
+      required: true
+      schema:
+        $ref: '#/components/schemas/STRING_ObjectId'
+    PARAM_PATH_Uuid:
+      name: id
+      in: path
+      description: Identificador del recurso al que se quiere acceder.
+      required: true
+      schema:
+        $ref: '#/components/schemas/STRING_ObjectUuid'
+    PARAM_PATH_ReportId:
+      name: rerpotId
+      in: path
+      description: 'Id del reporte que se desea generar. Valores de id perimitidos: EXECUTED_SCRIPTS_IN_DATE_RANGE, EXECUTED_SCRIPTS_WITH_ERROR_IN_DATE_RANGE, CREATED_SCRIPTS_IN_DATE_RANGE'
+      required: true
+      schema:
+        $ref: '#/components/schemas/ENUM_ReportType'
+    PARAM_QUERY_InitialDate:
+      name: initialDate
+      in: query
+      description: Fecha del límite inferior de un rango
+      required: true
+      schema:
+        $ref: '#/components/schemas/STRING_DateInIso8601'
+    PARAM_QUERY_Enabled:
+      name: enabled
+      in: query
+      description: Indica si se filtra la lista de recursos obtenidos con el estado "enabled" igual a true.
+      required: false
+      schema:
+        type: boolean
+        example: true
+    PARAM_QUERY_FinalDate:
+      name: finalDate
+      in: query
+      description: Fecha del límite superior de un rango
+      required: true
+      schema:
+        $ref: '#/components/schemas/STRING_DateInIso8601'
+    PARAM_QUERY_CurrentPage:
+      name: currentPage
+      in: query
+      description: Página actual para la paginación en backend
+      required: true
+      schema:
+        type: integer
+        format: int
+        example: 2
+    PARAM_QUERY_PageSize:
+      name: pageSize
+      in: query
+      description: Cantidad de registros por página para la paginación en backend
+      required: true
+      schema:
+        type: integer
+        format: int
+        example: 10
+  schemas:
+    DTO_NoteCreationInput:
+      type: object
+      properties:
+        title:
+          type: string
+          format: normal-string
+          example: 'nota 1'
+      required:
+        - title
+    DTO_NoteCreationOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: normal-string
+          example: 'c96f8bab-08e5-42f2-848c-379ae0793a5e'
+        title:
+          type: string
+          format: normal-string
+          example: 'Nota1'
+        state:
+          type: integer
+          format: int64
+          example: 1
+        listId:
+          type: string
+          format: normal-string
+          example: 'lista1111'
+        creator:
+          type: string
+          format: normal-string
+          example: 'FPonce'
+        creationDate:
+          type: string
+          format: normal-string
+          example: '1680400087'
+        updater:
+          type: string
+          format: normal-string
+          example: 'lista1111'
+        lastUpdateDate:
+          type: string
+          format: normal-string
+          example: '1680400087'
+    DTO_NoteOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: normal-string
+          example: 'c96f8bab-08e5-42f2-848c-379ae0793a5e'
+        title:
+          type: string
+          format: normal-string
+          example: 'Nota1'
+        state:
+          type: integer
+          format: int64
+          example: 1
+        listId:
+          type: string
+          format: normal-string
+          example: 'lista1111'
+        creator:
+          type: string
+          format: normal-string
+          example: 'FPonce'
+        creationDate:
+          type: string
+          format: normal-string
+          example: '1680400087'
+        updater:
+          type: string
+          format: normal-string
+          example: 'lista1111'
+        lastUpdateDate:
+          type: string
+          format: normal-string
+          example: '1680400087'
+    DTO_UserOutput:
+      type: object
+      properties:
+        name:
+          type: string
+          format: normal-string
+          example: 'Nombre de usuario'
+        role:
+          type: string
+          format: normal-string
+          example: 'ADMINISTRATOR'
+    DTO_SimplifiedNoteOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: normal-string
+          example: 'c96f8bab-08e5-42f2-848c-379ae0793a5e'
+        title:
+          type: string
+          format: normal-string
+          example: 'Nota1'
+        state:
+          type: integer
+          format: int64
+          example: 1
+    DTO_NoteUpdatingInput:
+      type: object
+      properties:
+        title:
+          type: string
+          format: normal-string
+          example: 'nota 1'
+        state:
+          type: integer
+          format: int64
+          example: 1
+      required:
+        - title
+    ANY_Object:
+      description: 'Un objeto con cualquier número de propiedades'
+    STRING_DateInIso8601:
+      type: string
+      format: iso-8601
+      example: 2023-01-31T00:12:54Z
+    STRING_ObjectId:
+      type: string
+      format: mongodb.ObjectId
+      example: 5b486d4057d0e42a3ca9c186
+    STRING_ObjectUuid:
+      type: string
+      format: UUID
+      example: asdf1234-08e5-42f2-848c-379ae0793a5e
+    ENUM_DatabaseType:
+      type: string
+      format: constant-string
+      enum: [SQL_SERVER, MONGO, MY_SQL]
+      example: SQL_SERVER
+    ENUM_ReportType:
+      type: string
+      format: constant-string
+      enum: [EXECUTED_SCRIPTS_IN_DATE_RANGE, EXECUTED_SCRIPTS_WITH_ERROR_IN_DATE_RANGE, CREATED_SCRIPTS_IN_DATE_RANGE]
+      example: EXECUTED_SCRIPTS_IN_DATE_RANGE
+    ENUM_ScriptExecutionResponseType:
+      type: string
+      format: constant-string
+      enum: [STRING, OBJECT, OBJECT_LIST]
+      example: OBJECT_LIST
+    ENUM_ScriptType:
+      type: string
+      format: constant-string
+      enum: [SQL, JS]
+      example: SQL
+    ENUM_ScriptExecutionState:
+      type: string
+      format: constant-string
+      enum: [PENDING_FOR_EXECUTION, FINISHED_EXECUTION]
+      example: PENDING_FOR_EXECUTION
+    ENUM_ScriptExecutionType:
+      type: string
+      format: constant-string
+      enum: [MANUAL, SCHEDULED]
+      example: MANUAL
+    ENUM_ScriptSequenceExecutionTask:
+      type: string
+      format: constant-string
+      enum: [ABORT_SEQUENCE_EXECUTION]
+      example: ABORT_SEQUENCE_EXECUTION
+    ENUM_ScriptSequenceExecutionState:
+      type: string
+      format: constant-string
+      enum: [ABORTED_EXECUTION, PENDING_FOR_EXECUTION, IN_EXECUTION_PROCESS, FINISHED_EXECUTION]
+      example: ABORTED_EXECUTION
+    OBJ_ConnectionDataObject:
+      type: object
+      properties:
+        connectionUrl:
+          type: string
+          format: mongo-url
+          example: mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]
+        host:
+          type: string
+          format: url-domain
+          example: sql-server-name
+        port:
+          type: number
+          format: tcp-port
+          example: 1443
+        username:
+          type: string
+          format: normal-string
+          example: serviceUser
+        password:
+          type: string
+          format: normal-string
+          example: passworForServiceUser
+    OBJ_ElapsedExecutionObject:
+      type: object
+      properties:
+        date:
+          $ref: "#/components/schemas/STRING_DateInIso8601"
+        scriptExecutionId:
+          $ref: "#/components/schemas/STRING_ObjectId"
+      required:
+        - date
+        - scriptExecutionId
+    OBJ_ParameterObject:
+      type: object
+      properties:
+        name:
+          type: string
+          format: string
+          example: PARAM_1
+        value:
+          type: string
+          format: normal-string
+          example: Valor del parámetro
+      required:
+        - name
+        - value
+    OBJ_ScriptExecutionResponseObject:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ENUM_ScriptExecutionResponseType'
+        error:
+          type: boolean
+          example: true
+        message:
+          type: string
+          format: normal-string
+          example: 10 row affected!
+        data:
+          oneOf:
+            - type: string
+              format: normal-string
+              example: 10 row affected!
+            - $ref: '#/components/schemas/ANY_Object'
+            - type: array
+              items:
+                $ref: '#/components/schemas/ANY_Object'
+        reportFileName:
+          type: string
+          format: normal-string
+          example: Obtener-clientes2023-06-06T10_16_31.533Z.xlsx
+      required:
+        - type
+        - error
+        - message
+        - data
+    OBJ_ScriptExecutionStateObject:
+      type: object
+      properties:
+        scriptId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        scriptName:
+          type: string
+          format: string
+          example: Script crear tabla Clientes
+        state:
+          $ref: '#/components/schemas/ENUM_ScriptExecutionState'
+      required:
+        - scriptId
+        - scriptName
+        - state
+    OBJ_ScriptIdentityObject:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        name:
+          type: string
+          format: string
+          example: Script crear tabla Clientes
+      required:
+        - id
+        - name
+    DTO_200SuccessfullyCompleted:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int64
+          example: 200
+        details:
+          type: string
+          format: normal-string
+          example: 'successfully completed'
+      required:
+        - status
+        - details
+    DTO_400FailedResponseOutput:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int64
+          example: 400
+        details:
+          type: string
+          format: normal-string
+          example: 'Bad Request'
+      required:
+        - status
+        - details
+    DTO_404FailedResponseOutput:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int64
+          example: 404
+        details:
+          type: string
+          format: normal-string
+          example: 'Not Found'
+      required:
+        - status
+        - details
+    DTO_409FailedResponseOutput:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int64
+          example: 409
+        details:
+          type: string
+          format: normal-string
+          example: 'Conflict'
+      required:
+        - status
+        - details
+    DTO_500FailedResponseOutput:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int64
+          example: 500
+        details:
+          type: string
+          format: normal-string
+          example: 'Internal Server Error'
+      required:
+        - status
+        - details
+    DTO_DatabaseConnectionUpdatingInput:
+      type: object
+      properties:
+        connectionData:
+          $ref: '#/components/schemas/OBJ_ConnectionDataObject'
+      required:
+        - connectionData
+    DTO_DatabaseCreationInput:
+      type: object
+      properties:
+        name:
+          type: string
+          format: database-name-syntax
+          example: DBSistescripts
+        description:
+          type: string
+          format: normal-string
+          example: Base de datos para el API de SisteScripts
+        type:
+          $ref: '#/components/schemas/ENUM_DatabaseType'
+        connectionData:
+          $ref: '#/components/schemas/OBJ_ConnectionDataObject'
+      required:
+        - name
+        - description
+        - type
+        - connectionData
+    DTO_ScriptCreationInput:
+      type: object
+      properties:
+        name:
+          type: string
+          format: normal-string
+          example: Crear tabla clientes
+        description:
+          type: string
+          format: normal-string
+          example: Este script permite la creación de una tabla llamada clientes
+        targetDatabaseId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        file:
+          type: string
+          format: binary
+      required:
+        - name
+        - description
+        - targetDatabaseId
+        - file
+    DTO_ScriptOutput:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        name:
+          type: string
+          format: normal-string
+          example: Crear tabla clientes
+        description:
+          type: string
+          format: normal-string
+          example: Este script permite la creación de una tabla llamada clientes
+        fileName:
+          type: string
+          format: normal-string
+          example: b86e29d7-f83f-4580-bc89-249b0f9ba264.sql
+        targetDatabaseId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        targetDatabaseName:
+          type: string
+          format: normal-string
+          example: SisteCreditoV2
+        targetDatabaseType:
+          $ref: '#/components/schemas/ENUM_DatabaseType'
+        scriptType:
+          $ref: '#/components/schemas/ENUM_ScriptType'
+        parameters:
+          type: array
+          items:
+            type: string
+          example: ['PARAM_1', 'PARAM_2']
+        creatorUser:
+          type: string
+          format: normal-string
+          example: wponce
+        creationDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+        latestUpdater:
+          type: string
+          format: normal-string
+          example: wponce
+        lastUpdateDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+      required:
+        - id
+        - name
+        - description
+        - fileName
+        - targetDatabaseId
+        - targetDatabaseName
+        - targetDatabaseType
+        - scriptType
+        - parameters
+        - creatorUser
+        - creationDate
+        - latestUpdater
+        - lastUpdateDate
+    DTO_ScriptUpdateInput:
+      type: object
+      properties:
+        description:
+          type: string
+          format: normal-string
+          example: Este script permite la creación de una tabla llamada clientes
+    DTO_ScriptFileOutput:
+      type: object
+      properties:
+        name:
+          type: string
+          format: normal-string
+          example: b86e29d7-f83f-4580-bc89-249b0f9ba264.sql
+        content:
+            type: string
+            format: normal-string
+            example: SELECT * FROM [[TABLE_NAME]]
+      required:
+        - name
+        - content
+    DTO_ScriptExecutionCreationInput:
+      type: object
+      properties:
+        scriptId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBJ_ParameterObject'
+        sequenceExecutionId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        executionScheduleId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+      required:
+        - scriptId
+        - parameters
+        - sequenceExecutionId
+        - executionScheduleId
+    DTO_SimplifiedScriptExecutionOutput:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        type:
+          $ref: '#/components/schemas/ENUM_ScriptExecutionType'
+        scriptId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        scriptName:
+          type: string
+          format: normal-string
+          example: 'Creación de usuario'
+        date:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+        sequenceExecutionId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        executionScheduleId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+      required:
+        - id
+        - type
+        - scriptId
+        - scriptName
+        - date
+        - sequenceExecutionId
+        - executionScheduleId
+    DTO_ScriptExecutionOutput:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        type:
+          $ref: '#/components/schemas/ENUM_ScriptExecutionType'
+        scriptId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        scriptName:
+          type: string
+          format: normal-string
+          example: 'Creación de usuario'
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBJ_ParameterObject'
+        date:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+        sequenceExecutionId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        executionScheduleId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        response:
+          $ref: '#/components/schemas/OBJ_ScriptExecutionResponseObject'
+        creatorUser:
+          type: string
+          format: normal-string
+          example: fponce
+        creationDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+        latestUpdater:
+          type: string
+          format: normal-string
+          example: fponce
+        lastUpdateDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+      required:
+        - id
+        - type
+        - scriptId
+        - scriptName
+        - parameters
+        - date
+        - sequenceExecutionId
+        - executionScheduleId
+        - response
+        - creatorUser
+        - creationDate
+        - latestUpdater
+        - lastUpdateDate
+    DTO_ExecutionScheduleCreationInput:
+      type: object
+      properties:
+        scriptId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBJ_ParameterObject'
+        cronExpression:
+          type: string
+          format: cron-expression
+          example: 0 0 15 * * ?
+      required:
+        - scriptId
+        - parameters
+        - cronExpression
+    DTO_ExecutionScheduleOutput:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        scriptId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        scriptName:
+          type: string
+          format: normal-string
+          example: Creación de tabla usuarios
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBJ_ParameterObject'
+        cronExpression:
+          type: string
+          format: cron-expression
+          example: 0 0 15 * * ?
+        elapsedExecutions:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBJ_ElapsedExecutionObject'
+        isEnabled:
+          type: boolean
+          example: true
+        creatorUser:
+          type: string
+          format: normal-string
+          example: fponce
+        creationDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+        latestUpdater:
+          type: string
+          format: normal-string
+          example: fponce
+        lastUpdateDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+      required:
+        - id
+        - scriptId
+        - scriptName
+        - parameters
+        - cronExpression
+        - elapsedExecutions
+        - isEnabled
+        - creatorUser
+        - creationDate
+        - latestUpdater
+        - lastUpdateDate
+    DTO_SimplifiedExecutionScheduleOutput:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        scriptId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        scriptName:
+          type: string
+          format: normal-string
+          example: Creación de tabla usuarios
+        cronExpression:
+          type: string
+          format: cron-expression
+          example: 0 0 15 * * ?
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBJ_ParameterObject'
+        isEnabled:
+          type: boolean
+          example: true
+        creationDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+      required:
+        - id
+        - scriptId
+        - scriptName
+        - cronExpression
+        - parameters
+        - isEnabled
+        - creationDate
+    DTO_ExecutionScheduleEnablingInput:
+      type: object
+      properties:
+        isEnabled:
+          type: boolean
+          example: true
+      required:
+        - isEnabled
+    DTO_ScriptSequenceCreationInput:
+      type: object
+      properties:
+        name:
+          type: string
+          format: normal-string
+          example: Creación de tabla e inserción de registro
+        description:
+          type: string
+          format: normal-string
+          example: Este secuencia contiene un script para la creación de una tabla y otro para la inserción de datos en esa tabla.
+        executionDetails:
+          type: string
+          format: normal-string
+          example: Se ejecuta el primer script, si el primer script es exitoso, se ejecuta el segundo script. En caso contrario, se aborta la ejecución de la secuencia y se evalúan los logs para determinar el motivo del error.
+        scripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBJ_ScriptIdentityObject'
+      required:
+        - name
+        - description
+        - executionDetails
+        - scripts
+    DTO_ScriptSequenceOutput:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        name:
+          type: string
+          format: normal-string
+          example: Creación de tabla e inserción de registro
+        description:
+          type: string
+          format: normal-string
+          example: Este secuencia contiene un script para la creación de una tabla y otro para la inserción de datos en esa tabla.
+        executionDetails:
+          type: string
+          format: normal-string
+          example: Se ejecuta el primer script, si el primer script es exitoso, se ejecuta el segundo script. En caso contrario, se aborta la ejecución de la secuencia y se evalúan los logs para determinar el motivo del error.
+        scripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBJ_ScriptIdentityObject'
+        creatorUser:
+          type: string
+          format: normal-string
+          example: fponce
+        creationDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+        latestUpdater:
+          type: string
+          format: normal-string
+          example: fponce
+        lastUpdateDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+      required:
+        - id
+        - name
+        - description
+        - executionDetails
+        - scripts
+        - creatorUser
+        - creationDate
+        - latestUpdater
+        - lastUpdateDate
+    DTO_ScriptSequenceUpdateInput:
+      type: object
+      properties:
+        name:
+          type: string
+          format: normal-string
+          example: Creación de tabla e inserción de registro
+        description:
+          type: string
+          format: normal-string
+          example: Este secuencia contiene un script para la creación de una tabla y otro para la inserción de datos en esa tabla.
+        executionDetails:
+          type: string
+          format: normal-string
+          example: Se ejecuta el primer script, si el primer script es exitoso, se ejecuta el segundo script. En caso contrario, se aborta la ejecución de la secuencia y se evalúan los logs para determinar el motivo del error.
+    DTO_SequenceExecutionCreationInput:
+      type: object
+      properties:
+        sequenceId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+      required:
+        - sequenceId
+    DTO_SequenceExecutionOutput:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        sequenceId:
+          $ref: '#/components/schemas/STRING_ObjectId'
+        sequenceName:
+          type: string
+          format: normal-string
+          example: Secuencia para la creación de tabla e inserción de usuario
+        state:
+          $ref: '#/components/schemas/ENUM_ScriptSequenceExecutionState'
+        scriptExecutionStates:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBJ_ScriptExecutionStateObject'
+        creatorUser:
+          type: string
+          format: normal-string
+          example: fponce
+        creationDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+        latestUpdater:
+          type: string
+          format: normal-string
+          example: fponce
+        lastUpdateDate:
+          $ref: '#/components/schemas/STRING_DateInIso8601'
+      required:
+        - id
+        - sequenceId
+        - sequenceName
+        - state
+        - scriptExecutionStates
+        - creatorUser
+        - creationDate
+        - latestUpdater
+        - lastUpdateDate
+    DTO_SequenceExecutionTaskCreationInput:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ENUM_ScriptSequenceExecutionTask'
+      required:
+        - type
+    DTO_ReportOutput:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/ENUM_ReportType'
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/ANY_Object'
+      required:
+        - type
+        - data
+  requestBodies:
+    REQUEST_PostNote:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_NoteCreationInput'
+    REQUEST_PostDatabase:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_DatabaseCreationInput'
+    REQUEST_PatchDatabase:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_DatabaseConnectionUpdatingInput'
+    REQUEST_PostScript:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptCreationInput'
+    REQUEST_PatchScript:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptUpdateInput'
+    REQUEST_PatchUpdatingNote:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_NoteUpdatingInput'
+    REQUEST_PostScriptExecution:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptExecutionCreationInput'
+    REQUEST_PostExecutionSchedule:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ExecutionScheduleCreationInput'
+    REQUEST_PatchExecutionSchedules:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ExecutionScheduleEnablingInput'
+    REQUEST_PostScriptSequence:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptSequenceCreationInput'
+    REQUEST_PatchScriptSequence:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptSequenceUpdateInput'
+    REQUEST_PostSequenceExecution:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_SequenceExecutionCreationInput'
+    REQUEST_PostSequenceExecutionTask:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_SequenceExecutionTaskCreationInput'
+x-components:
+  responseBodies:
+    RESPONSE_200_SuccessfullyCompleted:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/DTO_200SuccessfullyCompleted'
+    RESPONSE_200_GetNotes:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/DTO_SimplifiedNoteOutput'
+    RESPONSE_200_GetNoteId:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/DTO_NoteOutput'
+    RESPONSE_200_PostNotes:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/DTO_NoteCreationOutput'
+    RESPONSE_200_PostDatabase:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_DatabaseOutput'
+    RESPONSE_200_GetCurrentUser:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_UserOutput'
+    RESPONSE_200_GetDatabases:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/DTO_DatabaseOutput'
+    RESPONSE_200_GetDatabase:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_DatabaseOutput'
+    RESPONSE_200_PatchDatabase:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_DatabaseOutput'
+    RESPONSE_200_DeleteDatabase:
+      description: Operación exitosa
+    RESPONSE_200_PostDatabaseConnection:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_DatabaseOutput'
+    RESPONSE_200_DeleteDatabaseConnection:
+      description: Operación exitosa
+    RESPONSE_200_PostScript:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptOutput'
+    RESPONSE_200_GetScripts:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/DTO_ScriptOutput'
+    RESPONSE_200_GetScript:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptOutput'
+    RESPONSE_200_PatchScript:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptOutput'
+    RESPONSE_200_DeleteScript:
+      description: Operación exitosa
+    RESPONSE_200_GetScriptFiles:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/DTO_ScriptFileOutput'    
+    RESPONSE_200_PostScriptExecution:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptExecutionOutput'
+    RESPONSE_200_GetScriptExecutions:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/DTO_SimplifiedScriptExecutionOutput'
+    RESPONSE_200_GetScriptExecution:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptExecutionOutput'
+    RESPONSE_200_PostExecutionSchedule:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ExecutionScheduleOutput'
+    RESPONSE_200_GetExecutionSchedules:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/DTO_SimplifiedExecutionScheduleOutput'
+    RESPONSE_200_GetExecutionSchedule:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ExecutionScheduleOutput'
+    RESPONSE_200_DeleteExecutionSchedule:
+      description: Operación exitosa
+    RESPONSE_200_PatchExecutionSchedules:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ExecutionScheduleOutput'
+    RESPONSE_200_PostScriptSequence:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptSequenceOutput'        
+    RESPONSE_200_GetScriptSequences:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/DTO_ScriptSequenceOutput'
+    RESPONSE_200_GetScriptSequence:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptSequenceOutput'        
+    RESPONSE_200_DeleteScriptSequence:
+      description: Operación exitosa
+    RESPONSE_200_PatchScriptSequence:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ScriptSequenceOutput'        
+    RESPONSE_200_PostSequenceExecution:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_SequenceExecutionOutput'
+    RESPONSE_200_GetSequenceExecutions:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              - $ref: '#/components/schemas/DTO_SequenceExecutionOutput'
+    RESPONSE_200_GetSequenceExecution:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_SequenceExecutionOutput'
+    RESPONSE_200_PostSequenceExecutionTask:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_SequenceExecutionOutput'
+    RESPONSE_200_GetReport:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_ReportOutput'
+    RESPONSE_400_AnyOperation:
+      description: Este código se genera por un envío de datos erróneos en la petición.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_400FailedResponseOutput'
+    RESPONSE_404_AnyOperation:
+      description: Este código se genera porque el recurso relacionado a la operación no existe en el repositorio correspondiente.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_404FailedResponseOutput'
+    RESPONSE_409_AnyOperation:
+      description: Este código se genera por un conflicto en la lógica del negocio.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_409FailedResponseOutput'
+    RESPONSE_500_AnyOperation:
+      description: Este código se genera por un error inesperado en la ejecución de la operación respectiva. Este error es ageno al generado por la inexistencia del recurso (404) o por envío de datos incorrectos en la petición (400).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DTO_500FailedResponseOutput'
