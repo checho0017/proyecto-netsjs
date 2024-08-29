@@ -9,6 +9,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { CustomExceptionFilter } from './common/helpers/custom-exception.filter';
 import { ApplicationModule } from '@application/application.module';
 import { TracerModule } from '@libs/tracer/tracer.module';
+import { NotesDemoController } from './controllers/notes-demo';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TracerModule } from '@libs/tracer/tracer.module';
     CanvasSettingsController,
     BugReportsController,
     UsersController,
+    NotesDemoController
   ],
   providers: [
     {
