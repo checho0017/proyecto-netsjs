@@ -63,7 +63,7 @@ jobs:
     - name: Commit changes in external repo
       env:
         IMAGE_NAME: sergio0017/api-bff-nestjs
-        GITHUB_TOKEN: ${{ secrets.CLALVEACCESO }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
       run: |
         cd ..
         cd Charts
