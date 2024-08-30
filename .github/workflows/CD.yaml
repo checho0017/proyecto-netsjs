@@ -45,7 +45,6 @@ jobs:
       run: |
         cd ..
         git clone --single-branch --branch ${{ env.BRANCH }} ${{ env.EXTERNAL_REPO }} Charts
-        ls
         cd Charts
         ls
     - name: yq - portable yaml processor
