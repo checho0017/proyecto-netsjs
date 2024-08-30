@@ -70,5 +70,3 @@ jobs:
         git add .
         git commit -m "Actualiza el nombre de la imagen a ${{ env.IMAGE_NAME }}:${{ github.sha }}" 
         git push origin main
-        env:
-          GH_TOKEN: ${{ secrets.TOKENACCES }}
