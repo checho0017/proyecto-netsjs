@@ -67,5 +67,5 @@ jobs:
         git config --local user.name "sergio rodriguez"
         git add .
         git commit -m "Actualiza el nombre de la imagen a ${{ env.IMAGE_NAME }}:${{ github.sha }}"
-        git remote set-url origin https://checho0017:${{ env.GITHUB_TOKEN }}@github.com/checho0017/charts.git
+        git remote set-url origin https://checho0017:${{ env.GITHUB_TOKEN }}@github.com/checho0017/Charts.git
         git push origin main
