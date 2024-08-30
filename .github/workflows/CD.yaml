@@ -53,8 +53,9 @@ jobs:
       env: 
         IMAGE_NAME: sergio0017/api-bff-nestjs
       run: |
+        cd ..
         ls
-        cd /apichart
+        cd Charts/apichart
         ls
         yq eval " .versionImage = \"${{ env.IMAGE_NAME }}:${{ github.sha }}\"" -i
     - name: Commit changes in external repo
