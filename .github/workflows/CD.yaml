@@ -38,3 +38,29 @@ jobs:
         dockerfile: Dockerfile
         username: sergio0017
         password: Sergio#17
+    - name: Clone deplyment repository
+      env:
+        EXTERNAL_REPO: 'https://github.com/checho0017/Charts.git'
+        BRANCH: 'main'
+      run: |
+        git clone --single-branch --branch ${{ env.BRANCH }} ${{ env.EXTERNAL_REPO }} Charts
+        cd Charts
+    - name: yq - portable yaml processor
+      uses: mikefarah/yq@v4.44.3
+    - name: Set new image tag
+      env: 
+        IMAGE_NAME: sergio0017/api-bff-nestjs
+      run: |
+        cd apicharts
+        yq eval " .versionImage = \"${{ env.IMAGE_NAME }}:${{ github.sha }}\"" -i
+    - name: Commit changes in external repo
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      run: |
+        cd charts
+        git config --local user.email "sergiorodrigueztaborda@gmail.com"
+        git config --local user.name "sergio rodriguez"
+        git add .
+        git commit -m "Actualiza el nombre de la imagen a ${{ env.IMAGE_NAME }}:${{ github.sha }}"
+        git remote set-url origin https://checho0017:${{ env.GITHUB_TOKEN }}@github.com/checho0017/charts.git
+        git push origin main
