@@ -10,15 +10,16 @@ Esta práctica consiste en hacer la publicación de un api en NodeJs a partir de
   * **Cuenta en Docker Hub**: En esta cuenta publicamos las imágenes generadas.
   * **ArgoCD**: Utilizado para escuchar los cambios generados en el **chart helm**. Este se encarga de hacer un redespliegue.
 
+## Repositorios
+
+* [Api](https://github.com/checho0017/proyecto-netsjs)
+* [ChartsHelm](https://github.com/checho0017/Charts/blob/main/index.yaml)
+
+## Video
+* [Video de la practica](https://drive.google.com/file/d/1fjGfW8Zpk_RKdlzQBHiK5LbTbID8h6JG/view?usp=drive_link)
 
 ## Integrantes
 
 * Marlon David Garcia 
 * Claudia Bojaca
 * Sergio Rodriguez
-
-
-## Repositorios
-
-* [Api](https://github.com/checho0017/proyecto-netsjs)
-* [ChartsHelm](https://github.com/checho0017/Charts/blob/main/index.yaml)
