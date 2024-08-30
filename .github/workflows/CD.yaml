@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -72,7 +72,7 @@ jobs:
         git add .
         git commit -m "Actualiza el nombre de la imagen a ${{ env.IMAGE_NAME }}:${{ github.sha }}"
         echo "Usando la clave API: ${{ env.GITHUB_TOKEN }}"
-        git remote set-url origin https://checho0017:${{ secrets.TOKENACCES }}@github.com/checho0017/Charts.git 
+        git remote set-url origin https://checho0017:${{ secrets.CLALVEACCESO }}@github.com/checho0017/Charts.git 
         echo git remote -v
         git push origin main
 
