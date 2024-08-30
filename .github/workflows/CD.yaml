@@ -59,7 +59,7 @@ jobs:
         ls
         cd Charts/apichart
         ls
-        yq eval ".versionImage = \"${{ env.IMAGE_NAME }}:${{ github.sha }}\"" -i values.yaml
+        yq eval ".versionImage = \"${{ sergio0017/api-bff-nestjs }}:${{ github.sha }}\"" -i values.yaml
     - name: Commit changes in external repo
       env:
         GITHUB_TOKEN: ${{ secrets.CLALVEACCESO }}
