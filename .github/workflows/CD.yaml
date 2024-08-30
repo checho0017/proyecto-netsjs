@@ -67,7 +67,7 @@ jobs:
         cd ..
         cd Charts
         ls
-        git config  user.email "actions@github.com"
+        git config  user.email "action@github.com"
         git config  user.name "Github Actions"
         git add .
         git commit -m "Actualiza el nombre de la imagen a ${{ env.IMAGE_NAME }}:${{ github.sha }}"
