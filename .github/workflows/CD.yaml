@@ -45,6 +45,7 @@ jobs:
       run: |
         cd ..
         git clone --single-branch --branch ${{ env.BRANCH }} ${{ env.EXTERNAL_REPO }} Charts
+        ls
         cd Charts
     - name: yq - portable yaml processor
       uses: mikefarah/yq@v4.44.3
@@ -53,7 +54,8 @@ jobs:
         IMAGE_NAME: sergio0017/api-bff-nestjs
       run: |
         ls
-        cd Charts/apichart
+        cd ..
+        cd Charts/charts/apichart
         yq eval " .versionImage = \"${{ env.IMAGE_NAME }}:${{ github.sha }}\"" -i
     - name: Commit changes in external repo
       env:
