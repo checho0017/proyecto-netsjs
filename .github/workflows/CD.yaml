@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
       with: 
         token: ${{ secrets.TOKENACCES }}
 
@@ -68,7 +68,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.TOKENACCES }}
       run: |
         ls
-        git config --local user.email "action@github.com"
+        git config --local user.email "actions@github.com"
         git config --local user.name "Github Actions"
         git add .
         git commit -m "Actualiza el nombre de la imagen a ${{ env.IMAGE_NAME }}:${{ github.sha }}"
