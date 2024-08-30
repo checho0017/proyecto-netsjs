@@ -43,6 +43,7 @@ jobs:
         EXTERNAL_REPO: 'https://github.com/checho0017/Charts.git'
         BRANCH: 'main'
       run: |
+        cd ..
         git clone --single-branch --branch ${{ env.BRANCH }} ${{ env.EXTERNAL_REPO }} Charts
         cd Charts
     - name: yq - portable yaml processor
