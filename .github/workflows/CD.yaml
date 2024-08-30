@@ -69,8 +69,9 @@ jobs:
         git config --global user.name "Github Actions"
         git add .
         git commit -m "Actualiza el nombre de la imagen a ${{ env.IMAGE_NAME }}:${{ github.sha }}"
-        echo "Usando la clave API: $GITHUB_TOKEN"
+        echo "Usando la clave API: ${{ env.GITHUB_TOKEN }}"
         git remote set-url origin https://checho0017:${{ secrets.TOKENACCES }}@github.com/checho0017/Charts.git 
+        echo git remote -v
         git push origin main
 
         
