@@ -47,16 +47,17 @@ jobs:
         git clone --single-branch --branch ${{ env.BRANCH }} ${{ env.EXTERNAL_REPO }} Charts
         ls
         cd Charts
+        ls
     - name: yq - portable yaml processor
       uses: mikefarah/yq@v4.44.3
     - name: Set new image tag
       env: 
         IMAGE_NAME: sergio0017/api-bff-nestjs
       run: |
-        ls
         cd ..
         ls
-        cd Charts/apichart
+        cd /apichart
+        ls
         yq eval " .versionImage = \"${{ env.IMAGE_NAME }}:${{ github.sha }}\"" -i
     - name: Commit changes in external repo
       env:
