@@ -62,7 +62,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       run: |
-        cd charts
+        cd ..
+        ls
         git config --local user.email "sergiorodrigueztaborda@gmail.com"
         git config --local user.name "sergio rodriguez"
         git add .
