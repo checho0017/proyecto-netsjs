@@ -62,7 +62,7 @@ jobs:
         yq eval ".versionImage = \"${{ env.IMAGE_NAME }}:${{ github.sha }}\"" -i values.yaml
     - name: Commit changes in external repo
       env:
-        GITHUB_TOKEN: ${{ secrets.TOKENACCES }}
+        GITHUB_TOKEN: ${{ secrets.CLALVEACCESO }}
       run: |
         cd ..
         cd Charts
@@ -72,7 +72,7 @@ jobs:
         git add .
         git commit -m "Actualiza el nombre de la imagen a ${{ env.IMAGE_NAME }}:${{ github.sha }}"
         echo "Usando la clave API: ${{ env.GITHUB_TOKEN }}"
-        git remote set-url origin https://checho0017:${{ secrets.CLALVEACCESO }}@github.com/checho0017/Charts.git 
+        git remote set-url origin https://checho0017:${{ env.GITHUB_TOKEN }}@github.com/checho0017/Charts.git 
         echo git remote -v
         git push origin main
 
