@@ -34,7 +34,7 @@ jobs:
       with:
         image: sergio0017/api-bff-nestjs
         tags: ${{ github.sha }}
-        registery: docker.io
+        registry: docker.io
         dockerfile: Dockerfile
         username: sergio0017
         password: Sergio#17
