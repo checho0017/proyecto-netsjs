@@ -63,9 +63,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.TOKENACCES }}
       run: |
         ls
-        git config --local user.email "sergiorodrigueztaborda@gmail.com"
-        git config --local user.name "sergio rodriguez"
+        git config --local user.email "action@github.com"
+        git config --local user.name "Github Actions"
         git add .
         git commit -m "Actualiza el nombre de la imagen a ${{ env.IMAGE_NAME }}:${{ github.sha }}"
-        git remote set-url origin https://oauth2:{secrets.TOKENACCES}@github.com/checho0017/Charts.git
+        git remote set-url origin https://checho0017:${{ secrets.TOKENACCES }}@github.com/checho0017/Charts.git
         git push origin main
