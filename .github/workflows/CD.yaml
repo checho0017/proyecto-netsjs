@@ -55,7 +55,8 @@ jobs:
       run: |
         ls
         cd ..
-        cd Charts/charts/apichart
+        ls
+        cd Charts/apichart
         yq eval " .versionImage = \"${{ env.IMAGE_NAME }}:${{ github.sha }}\"" -i
     - name: Commit changes in external repo
       env:
