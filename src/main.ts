@@ -13,7 +13,7 @@ const swaggerApiContract = '1-api/contrato-de-api.yml';
 const swagger = yaml.load(fs.readFileSync(path.join(__dirname, swaggerApiContract), 'utf8'));
 
 async function bootstrap() {
-  await KeyVaultProvider.getSecrets().catch(err => new CustomLoggerService().error(InitializationError.name, err.message, err.stack, null));
+ // await KeyVaultProvider.getSecrets().catch(err => new CustomLoggerService().error(InitializationError.name, err.message, err.stack, null));
 
   const app = await NestFactory.create(InitializationModule);
   app.enableVersioning({type: VersioningType.URI});
