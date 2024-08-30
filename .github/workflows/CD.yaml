@@ -53,7 +53,6 @@ jobs:
       env: 
         IMAGE_NAME: sergio0017/api-bff-nestjs
       run: |
-        cd ..
         ls
         cd /apichart
         ls
