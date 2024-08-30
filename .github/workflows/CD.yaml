@@ -29,12 +29,12 @@ jobs:
       env:
         NODE_ENV: production     
 
-    - name: Docker login
-      #env:
-        #DOCKER_USERNAME: ${{ secrets.SUPER_USUARIO }}
-        #DOCKER_PASSWORD: ${{ secrets.CLAVE }}
-      run : docker login -u="sergio0017" -p="Sergio#17" docker.io
-    - name: Build Docker image with latest tag
-      run: docker build . --file Dockerfile --tag sergio0017/api-bff-nestjs:1.1.2
-    - name: Publish dockerimage to docker hub
-      run: docker push sergio0017/api-bff-nestjs:1.1.2
+    - uses: mr-smithers-excellent/docker-build-push@v6
+      name: Push Docker image
+      with:
+        image: sergio0017/api-bff-nestjs
+        tags: ${{ github.sha }}
+        registery: docker.io
+        dockerfile: Dockerfile
+        username: sergio0017
+        password: Sergio#17
