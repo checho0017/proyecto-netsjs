@@ -1,7 +1,7 @@
 # Plantilla para Backend For Frontend Clean - (nes-bff-clean-v2.1.3)
 Esta plantilla permite la implementación de contenedores C4 de tipo Backend For Frontend (BFF). Un BFF es un contenedor backend que cumple la función de un Gateway de APIs. No obstante el objetivo principal del patrón BFF es utilizar este contenedor como proveedor dedicado de datos a cada una de las diferentes interfaces UI empresariales de un mismo contexto.
 
-## Descripción técnica de la plantilla
+## Descripción técnica de la plantill
 
 | Metadato                 | Valor |
 |--------------------------|-------|
