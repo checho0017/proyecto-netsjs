@@ -4,6 +4,7 @@ Esta práctica consiste en hacer la publicación de un api en NodeJs a partir de
 
  Se hace uso de:
   * **2 repositorios en github**: el repositorio /proyecto-netsjs contiene el desarrollo de la API en NodeJS y el repositorio de /Charts contiene la configuración del chart helm con toda la configuración de los manifiestos.
+  * **GitHub Pages**: Utilizado para pulicar el repo de charts. 
   * **Kubernetes**: Utilizado para generar el cluster utilizado.
   * **Cuenta en Digital Ocean**: En esta cuenta almacenamos el cluster(Kubernetes).
   * **Docker**: Utilizado para generar las imágenes de la Api que seran ejecutadas sobre el cluster.
